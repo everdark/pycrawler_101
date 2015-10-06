@@ -285,41 +285,46 @@ div.output_prompt {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="which-field?-&#26377;&#21738;&#20123;&#27396;&#20301;&#65311;">which field? &#26377;&#21738;&#20123;&#27396;&#20301;&#65311;<a class="anchor-link" href="#which-field?-&#26377;&#21738;&#20123;&#27396;&#20301;&#65311;">&#182;</a></h2><ul>
-<li>use <code>metadata=1</code> to extract all possible fields on a node<ul>
-<li><code>&lt;node_id&gt;?metadata=1</code></li>
+<li>not all fields will be returned in an API call</li>
+<li>use <span style="font-size:20pt">metadata=1</span> to extract all possible fields on a node<ul>
+<li>example: <strong>me?metadata=1</strong></li>
 </ul>
 </li>
 <li>alternatively, use the interactive "Search for a field" GUI tool to the left panel on the api explorer</li>
-<li>not all fields will be returned in an API call</li>
 </ul>
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="nested-query-&#22810;&#23652;&#26597;&#35426;">nested query &#22810;&#23652;&#26597;&#35426;<a class="anchor-link" href="#nested-query-&#22810;&#23652;&#26597;&#35426;">&#182;</a></h2><p><code>&lt;node_id&gt;?fields=f1{subf1,subf2,...},f2,...</code></p>
-<p>or</p>
-<p><code>&lt;node_id&gt;?fields=f1.fields(subf1,subf2,...),f2,...</code></p>
-<ul>
-<li>there is no limit on the depth of nesting (according to official doc)</li>
+<h2 id="nested-query-&#22810;&#23652;&#26597;&#35426;">nested query &#22810;&#23652;&#26597;&#35426;<a class="anchor-link" href="#nested-query-&#22810;&#23652;&#26597;&#35426;">&#182;</a></h2><ul>
+<li>solution 1: <ul>
+<li><code>&lt;node_id&gt;?fields=f1{subf1,subf2,...},f2,...</code></li>
+<li>example: <strong>me?fields=photos{from,id}</strong></li>
+</ul>
+</li>
+<li>solution 2: (recommended) <ul>
+<li><code>&lt;node_id&gt;?fields=f1.fields(subf1,subf2,...),f2,...</code></li>
+<li>example: <strong>me?fields=photos.fields(from,id)</strong></li>
+</ul>
+</li>
+<li>no limit on the depth of nesting</li>
 </ul>
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="node-or-edge?-&#32080;&#40670;&#25110;&#36899;&#32218;&#65311;">node or edge? &#32080;&#40670;&#25110;&#36899;&#32218;&#65311;<a class="anchor-link" href="#node-or-edge?-&#32080;&#40670;&#25110;&#36899;&#32218;&#65311;">&#182;</a></h2><ul>
-<li>edge is the population, node is talking about individual</li>
+<li>edge is the <em>population</em>, node is talking about <em>individual</em></li>
 <li><em>all</em> of my photos =&gt; edge (no id); <em>this</em> photo of mine =&gt; node (with id)</li>
 <li>fields are defined on nodes, not edges</li>
 <li>any difference?<ul>
@@ -331,14 +336,13 @@ div.output_prompt {
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="modifier:-limit-&#38480;&#21046;&#22238;&#20659;&#25976;">modifier: limit &#38480;&#21046;&#22238;&#20659;&#25976;<a class="anchor-link" href="#modifier:-limit-&#38480;&#21046;&#22238;&#20659;&#25976;">&#182;</a></h2><ul>
+<h2 id="modifier-&#26597;&#35426;&#20462;&#39166;&#35486;">modifier &#26597;&#35426;&#20462;&#39166;&#35486;<a class="anchor-link" href="#modifier-&#26597;&#35426;&#20462;&#39166;&#35486;">&#182;</a></h2><h3 id="limit-&#38480;&#21046;&#22238;&#20659;&#25976;">limit &#38480;&#21046;&#22238;&#20659;&#25976;<a class="anchor-link" href="#limit-&#38480;&#21046;&#22238;&#20659;&#25976;">&#182;</a></h3><ul>
 <li>optionally, use method <code>.limit(n)</code> or <code>?limit=n</code> to restrict the number of objects returned<ul>
 <li>on a field:<ul>
 <li><code>me?fields=photos.limit(10)</code></li>
@@ -354,14 +358,13 @@ div.output_prompt {
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="modifier:-summary-&#35336;&#31639;&#32317;&#37327;">modifier: summary &#35336;&#31639;&#32317;&#37327;<a class="anchor-link" href="#modifier:-summary-&#35336;&#31639;&#32317;&#37327;">&#182;</a></h2><ul>
+<h3 id="summary-&#35336;&#31639;&#32317;&#37327;">summary &#35336;&#31639;&#32317;&#37327;<a class="anchor-link" href="#summary-&#35336;&#31639;&#32317;&#37327;">&#182;</a></h3><ul>
 <li>fields (or edges) with multiple entities usually have a summary containing their counts<ul>
 <li>on a field:<ul>
 <li><code>&lt;photo_id&gt;?fields=likes.summary(true)</code></li>
@@ -377,14 +380,13 @@ div.output_prompt {
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="modifier-chaining-&#26041;&#27861;&#37832;&#32080;">modifier chaining &#26041;&#27861;&#37832;&#32080;<a class="anchor-link" href="#modifier-chaining-&#26041;&#27861;&#37832;&#32080;">&#182;</a></h2><ul>
+<h2 id="chaining-&#20462;&#39166;&#35486;&#37832;&#32080;">chaining &#20462;&#39166;&#35486;&#37832;&#32080;<a class="anchor-link" href="#chaining-&#20462;&#39166;&#35486;&#37832;&#32080;">&#182;</a></h2><ul>
 <li>on a field:<ul>
 <li><code>&lt;photo_id&gt;?files=likes.limit(1).summary(true)</code></li>
 </ul>
@@ -397,8 +399,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -415,21 +416,70 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="scenario:-who-likes-my-posts?">scenario: who likes my posts?<a class="anchor-link" href="#scenario:-who-likes-my-posts?">&#182;</a></h2><h2 id="&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#35738;&#65311;">&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#35738;&#65311;<a class="anchor-link" href="#&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#35738;&#65311;">&#182;</a></h2><ol>
-<li>start from the <code>me</code> node</li>
-<li>what fields a post can have?<ul>
-<li>use <code>?metadata=1</code> on any one of your post (try <code>me/posts</code> first)</li>
-<li>"likes" are indeed edges (connections) instead of fields</li>
-<li>still, we can use it in the field query (just as <code>me/photos</code> to <code>me?fields=photos</code>)</li>
+<h2 id="scenario:-who-likes-my-posts?">scenario: who likes my posts?<a class="anchor-link" href="#scenario:-who-likes-my-posts?">&#182;</a></h2><h2 id="&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#30340;&#25991;&#31456;&#35738;&#65311;">&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#30340;&#25991;&#31456;&#35738;&#65311;<a class="anchor-link" href="#&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#30340;&#25991;&#31456;&#35738;&#65311;">&#182;</a></h2><ol>
+<li>從me結點出發</li>
+<li>在me節點的文章有哪些？<ul>
+<li>以連結語法查詢：<code>me/posts</code></li>
+<li>或者以欄位語法查詢：<code>me?fields=posts</code></li>
 </ul>
 </li>
-<li>setup a time range by using the <code>since</code> modifier =&gt; <a href="http://www.epochconverter.com">timestamp converter</a></li>
-<li>get total count using the <code>summary</code> modifier</li>
-<li>finally, something like this:<ul>
+<li>一篇文章有哪些欄位？<ul>
+<li>先隨便挑一篇文章當作新查詢的起點，使用<code>?metadata=1</code>來觀察</li>
+<li>按讚數是欄位還是連結？</li>
+</ul>
+</li>
+<li>使用since修飾語來做時間區間的限制<ul>
+<li><a href="http://www.epochconverter.com">timestamp converter</a></li>
+</ul>
+</li>
+<li>使用summary修飾語取得按讚的總數</li>
+<li>參考答案：<ul>
 <li><code>me/posts?fields=likes.fields(name).summary(true)&amp;since=1420070400&amp;limit=100</code></li>
 </ul>
 </li>
 </ol>
+
+</div>
+</div>
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="other-syntax-&#36028;&#25991;,-&#25353;&#35738;,-&#33287;&#21034;&#38500;">other syntax &#36028;&#25991;, &#25353;&#35738;, &#33287;&#21034;&#38500;<a class="anchor-link" href="#other-syntax-&#36028;&#25991;,-&#25353;&#35738;,-&#33287;&#21034;&#38500;">&#182;</a></h2><p>change the Graph API method from <strong>GET</strong> to <strong>POST</strong>/<strong>DELETE</strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="img/post-button.png"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>some usage:<ul>
+<li>add <strong>message</strong> field on <strong>me/feed</strong> to post an article to your wall</li>
+<li>add <strong>/likes</strong> edge on a post node to like it</li>
+<li>change method from <strong>POST</strong> to <strong>DELETE</strong>, find out the post id above and simply sumbit</li>
+</ul>
+</li>
+</ul>
+<blockquote><p>you can do virtually all the things you may have done on Facebook in browser over the Graph API; 
+<br>
+however those operations are not covered in this course. :)</p>
+</blockquote>
 
 </div>
 </div>
@@ -5197,7 +5247,273 @@ AAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="programmatically-get-the-token?">programmatically get the token?<a class="anchor-link" href="#programmatically-get-the-token?">&#182;</a></h2><p>not covered in this course...</p>
+<h2 id="scenario:-the-warrior-of-likes">scenario: the warrior of likes<a class="anchor-link" href="#scenario:-the-warrior-of-likes">&#182;</a></h2><h2 id="&#29378;&#35738;&#22763;&#65340;&#20659;&#35498;&#21855;&#31243;&#65295;">&#29378;&#35738;&#22763;&#65340;&#20659;&#35498;&#21855;&#31243;&#65295;<a class="anchor-link" href="#&#29378;&#35738;&#22763;&#65340;&#20659;&#35498;&#21855;&#31243;&#65295;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="spec:">spec:<a class="anchor-link" href="#spec:">&#182;</a></h4><ul>
+<li>給定一個使用者，一段時間的文章：<ul>
+<li>全部給他讚下去</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#27493;&#39519;&#19968;&#65306;&#35264;&#23519;&#20320;&#30340;&#26379;&#21451;&#28165;&#21934;">&#27493;&#39519;&#19968;&#65306;&#35264;&#23519;&#20320;&#30340;&#26379;&#21451;&#28165;&#21934;<a class="anchor-link" href="#&#27493;&#39519;&#19968;&#65306;&#35264;&#23519;&#20320;&#30340;&#26379;&#21451;&#28165;&#21934;">&#182;</a></h3><p><code>me/friends</code></p>
+<blockquote><p>不是所有朋友都能被查到！</p>
+</blockquote>
+<p><img src="img/debug-message.png"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#23567;&#25216;&#24039;&#65306;&#22914;&#20309;&#24471;&#30693;&#19968;&#20491;&#20351;&#29992;&#32773;&#30340;Graph-API-ID?">&#23567;&#25216;&#24039;&#65306;&#22914;&#20309;&#24471;&#30693;&#19968;&#20491;&#20351;&#29992;&#32773;&#30340;Graph API ID?<a class="anchor-link" href="#&#23567;&#25216;&#24039;&#65306;&#22914;&#20309;&#24471;&#30693;&#19968;&#20491;&#20351;&#29992;&#32773;&#30340;Graph-API-ID?">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>右鍵Inspect Element大法！搜尋"data-uid"...</p>
+</blockquote>
+<p><img src="img/data-uid.png"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#27493;&#39519;&#20108;&#65306;&#35264;&#23519;&#26379;&#21451;&#30340;&#25991;&#31456;">&#27493;&#39519;&#20108;&#65306;&#35264;&#23519;&#26379;&#21451;&#30340;&#25991;&#31456;<a class="anchor-link" href="#&#27493;&#39519;&#20108;&#65306;&#35264;&#23519;&#26379;&#21451;&#30340;&#25991;&#31456;">&#182;</a></h3><p><code>&lt;post_id&gt;/posts</code></p>
+<blockquote><p>不是所有的朋友的文章都能被Graph API抓出來！</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># get list of all avaiable friends on me node</span>
+<span class="k">def</span> <span class="nf">getAllFriendsOnAPI</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+    <span class="n">fr</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="s">&quot;https://graph.facebook.com/v2.4/me/friends?fields=name&quot;</span>
+    <span class="n">qs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;access_token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">qs</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="n">fr</span> <span class="o">+=</span> <span class="n">res</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span>
+    <span class="k">while</span> <span class="s">&quot;next&quot;</span> <span class="ow">in</span> <span class="n">res</span><span class="p">[</span><span class="s">&quot;paging&quot;</span><span class="p">]:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s">&quot;paging&quot;</span><span class="p">][</span><span class="s">&quot;next&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">fr</span> <span class="o">+=</span> <span class="n">res</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">fr</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">token</span> <span class="o">=</span> <span class="s">&quot;CAACEdEose0cBAL904Js5Xl2RHrf15tZBGZBOwmUotrvJE660yjwZCZAK6nJd54bFlE4ZAvEf2ZCxGZC6DfusFCZCnDJUPT36bJZBQHkr8WZByrr1HPSb7AVKq632li0RsAbC0todLXr7g4RZBk1MkdbERYzw6Yqs5lIU1I5M5JoJeIqMOpwvbJcyOtM3mYLC2SedbieObS6cVNgpgZDZD&quot;</span>
+<span class="n">friends</span> <span class="o">=</span> <span class="n">getAllFriendsOnAPI</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="n">friends</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[40]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{u&apos;id&apos;: u&apos;348900235&apos;, u&apos;name&apos;: u&apos;Han-Wen Chang&apos;},
+ {u&apos;id&apos;: u&apos;503482470&apos;, u&apos;name&apos;: u&apos;Ning Chen&apos;},
+ {u&apos;id&apos;: u&apos;523887614&apos;, u&apos;name&apos;: u&apos;\u9673\u594e\u9298&apos;},
+ {u&apos;id&apos;: u&apos;524871968&apos;, u&apos;name&apos;: u&apos;Pin Wu&apos;},
+ {u&apos;id&apos;: u&apos;710176842&apos;, u&apos;name&apos;: u&apos;Linhots Tsao&apos;},
+ {u&apos;id&apos;: u&apos;1045695611&apos;, u&apos;name&apos;: u&apos;Chih-Peng Wu&apos;}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># get list of posts given a user id</span>
+<span class="k">def</span> <span class="nf">getAllPosts</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span> 
+    <span class="n">posts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">api_addr</span> <span class="o">=</span> <span class="s">&quot;https://graph.facebook.com/v2.4/</span><span class="si">%s</span><span class="s">/posts&quot;</span> <span class="o">%</span> <span class="n">user</span>
+    <span class="n">qs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;access_token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_addr</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">qs</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]):</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="n">posts</span> <span class="o">+=</span> <span class="p">[</span> <span class="n">d</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">res</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="p">]</span>
+        <span class="k">while</span> <span class="s">&quot;paging&quot;</span> <span class="ow">in</span> <span class="n">res</span> <span class="ow">and</span> <span class="nb">next</span> <span class="ow">in</span> <span class="n">res</span><span class="p">[</span><span class="s">&quot;paging&quot;</span><span class="p">]:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s">&quot;paging&quot;</span><span class="p">][</span><span class="s">&quot;next&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="n">post_ids</span> <span class="o">+=</span> <span class="p">[</span> <span class="n">d</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">res</span><span class="p">[</span><span class="s">&quot;data&quot;</span><span class="p">]</span> <span class="p">]</span>
+        <span class="k">return</span> <span class="n">posts</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="n">all_posts</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">getAllPosts</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">),</span> 
+                <span class="p">[</span> <span class="n">f</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">friends</span> <span class="p">])</span>
+<span class="n">results</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">friends</span><span class="p">,</span> <span class="n">all_posts</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;get </span><span class="si">%s</span><span class="s"> post(s) from </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&quot;name&quot;</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>get 0 post(s) from Han-Wen Chang
+get 0 post(s) from Ning Chen
+get 21 post(s) from 陳奎銘
+get 0 post(s) from Pin Wu
+get 25 post(s) from Linhots Tsao
+get 0 post(s) from Chih-Peng Wu
+get 23 post(s) from Chia-Chi Chang
+get 25 post(s) from Summit Suen
+get 25 post(s) from Ddio Juan
+get 23 post(s) from Mansun Kuo
+get 0 post(s) from 蘇中才
+get 0 post(s) from 王雅人
+get 25 post(s) from 陳嘉葳
+get 24 post(s) from 趙致平
+get 0 post(s) from Julie Woo
+get 22 post(s) from Arvin Huang
+get 24 post(s) from Chien-Wen Chen
+get 2 post(s) from Haoping Liu
+get 0 post(s) from Felix Shiao
+get 25 post(s) from Ikki Oda
+get 22 post(s) from Ming-Yi Huang
+get 20 post(s) from 徐嘉泰
+get 25 post(s) from Chen John
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#27493;&#39519;&#19977;&#65306;&#35738;&#65281;">&#27493;&#39519;&#19977;&#65306;&#35738;&#65281;<a class="anchor-link" href="#&#27493;&#39519;&#19977;&#65306;&#35738;&#65281;">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[89]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># function to like a post</span>
+<span class="k">def</span> <span class="nf">postLikes</span><span class="p">(</span><span class="n">post</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span> 
+    <span class="n">posts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">api_addr</span> <span class="o">=</span> <span class="s">&quot;https://graph.facebook.com/v2.4/</span><span class="si">%s</span><span class="s">/likes&quot;</span> <span class="o">%</span> <span class="n">post</span>
+    <span class="n">qs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;access_token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_addr</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">qs</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="programmatically-get-the-access-token?">programmatically get the access token?<a class="anchor-link" href="#programmatically-get-the-access-token?">&#182;</a></h2><blockquote><p>that is beyond the scope of this course :)</p>
+</blockquote>
 
 </div>
 </div>
@@ -7119,9 +7435,10 @@ string returned by .groups:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Reference">Reference<a class="anchor-link" href="#Reference">&#182;</a></h2><ul>
+<h1 id="Reference">Reference<a class="anchor-link" href="#Reference">&#182;</a></h1><ul>
 <li><a href="https://developers.facebook.com/docs/graph-api/reference/">Facebook official Graph API reference</a></li>
 <li><a href="https://docs.python.org/2/howto/regex.html">Python official re tutorial</a></li>
+<li><a href="http://www.epochconverter.com">Unix timestamp converter</a></li>
 <li>regex visualizer / tester:<ul>
 <li><a href="https://www.debuggex.com">Debuggex</a></li>
 <li><a href="https://regex101.com/#python">regex101</a></li>
@@ -7131,6 +7448,305 @@ string returned by .groups:
 
 </div>
 </div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Appendix">Appendix<a class="anchor-link" href="#Appendix">&#182;</a></h1><ul>
+<li>Python function <code>decorator</code> usage</li>
+<li>Python <code>map</code> method</li>
+</ul>
+
+</div>
+</div>
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Python-function-decorator-example">Python function decorator example<a class="anchor-link" href="#Python-function-decorator-example">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">printArgs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">arg</span>
+
+<span class="n">printArgs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1
+2
+3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># decorator without argument</span>
+<span class="k">def</span> <span class="nf">decorate</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;decorated!&quot;</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@decorate</span>
+<span class="k">def</span> <span class="nf">printArgs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">arg</span>
+
+<span class="n">printArgs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>decorated!
+1
+2
+3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># decorator with argument(s)</span>
+<span class="k">def</span> <span class="nf">decorateWithArg</span><span class="p">(</span><span class="n">dname</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">realWrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&quot;decorated by </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">dname</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
+    <span class="k">return</span> <span class="n">realWrapper</span>
+
+<span class="nd">@decorateWithArg</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">printArgs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">arg</span>
+
+<span class="n">printArgs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>decorated by test!
+1
+2
+3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Python-map-method">Python <code>map</code> method<a class="anchor-link" href="#Python-map-method">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># apply a function with exactly one argument</span>
+<span class="k">def</span> <span class="nf">addOne</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">one2nine</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="n">one2nine</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="nb">map</span><span class="p">(</span><span class="n">addOne</span><span class="p">,</span> <span class="n">one2nine</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># apply a function with more than one argument</span>
+<span class="k">def</span> <span class="nf">addY</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[69]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># if y is unchanged</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="k">print</span> <span class="nb">map</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">addY</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">one2nine</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># if y is changing</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="k">print</span> <span class="nb">map</span><span class="p">(</span><span class="n">addY</span><span class="p">,</span> <span class="n">one2nine</span><span class="p">,</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div></section>
     </section>
 </div>
@@ -7147,6 +7763,8 @@ Reveal.initialize({
 controls: true,
 progress: true,
 history: true,
+
+width: 1080,
 
 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
