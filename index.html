@@ -285,41 +285,46 @@ div.output_prompt {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="which-field?-&#26377;&#21738;&#20123;&#27396;&#20301;&#65311;">which field? &#26377;&#21738;&#20123;&#27396;&#20301;&#65311;<a class="anchor-link" href="#which-field?-&#26377;&#21738;&#20123;&#27396;&#20301;&#65311;">&#182;</a></h2><ul>
-<li>use <code>metadata=1</code> to extract all possible fields on a node<ul>
-<li><code>&lt;node_id&gt;?metadata=1</code></li>
+<li>not all fields will be returned in an API call</li>
+<li>use <span style="font-size:20pt">metadata=1</span> to extract all possible fields on a node<ul>
+<li>example: <strong>me?metadata=1</strong></li>
 </ul>
 </li>
 <li>alternatively, use the interactive "Search for a field" GUI tool to the left panel on the api explorer</li>
-<li>not all fields will be returned in an API call</li>
 </ul>
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="nested-query-&#22810;&#23652;&#26597;&#35426;">nested query &#22810;&#23652;&#26597;&#35426;<a class="anchor-link" href="#nested-query-&#22810;&#23652;&#26597;&#35426;">&#182;</a></h2><p><code>&lt;node_id&gt;?fields=f1{subf1,subf2,...},f2,...</code></p>
-<p>or</p>
-<p><code>&lt;node_id&gt;?fields=f1.fields(subf1,subf2,...),f2,...</code></p>
-<ul>
-<li>there is no limit on the depth of nesting (according to official doc)</li>
+<h2 id="nested-query-&#22810;&#23652;&#26597;&#35426;">nested query &#22810;&#23652;&#26597;&#35426;<a class="anchor-link" href="#nested-query-&#22810;&#23652;&#26597;&#35426;">&#182;</a></h2><ul>
+<li>solution 1: <ul>
+<li><code>&lt;node_id&gt;?fields=f1{subf1,subf2,...},f2,...</code></li>
+<li>example: <strong>me?fields=photos{from,id}</strong></li>
+</ul>
+</li>
+<li>solution 2: (recommended) <ul>
+<li><code>&lt;node_id&gt;?fields=f1.fields(subf1,subf2,...),f2,...</code></li>
+<li>example: <strong>me?fields=photos.fields(from,id)</strong></li>
+</ul>
+</li>
+<li>no limit on the depth of nesting</li>
 </ul>
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="node-or-edge?-&#32080;&#40670;&#25110;&#36899;&#32218;&#65311;">node or edge? &#32080;&#40670;&#25110;&#36899;&#32218;&#65311;<a class="anchor-link" href="#node-or-edge?-&#32080;&#40670;&#25110;&#36899;&#32218;&#65311;">&#182;</a></h2><ul>
-<li>edge is the population, node is talking about individual</li>
+<li>edge is the <em>population</em>, node is talking about <em>individual</em></li>
 <li><em>all</em> of my photos =&gt; edge (no id); <em>this</em> photo of mine =&gt; node (with id)</li>
 <li>fields are defined on nodes, not edges</li>
 <li>any difference?<ul>
@@ -331,14 +336,13 @@ div.output_prompt {
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="modifier:-limit-&#38480;&#21046;&#22238;&#20659;&#25976;">modifier: limit &#38480;&#21046;&#22238;&#20659;&#25976;<a class="anchor-link" href="#modifier:-limit-&#38480;&#21046;&#22238;&#20659;&#25976;">&#182;</a></h2><ul>
+<h2 id="modifier-&#26597;&#35426;&#20462;&#39166;&#35486;">modifier &#26597;&#35426;&#20462;&#39166;&#35486;<a class="anchor-link" href="#modifier-&#26597;&#35426;&#20462;&#39166;&#35486;">&#182;</a></h2><h3 id="limit-&#38480;&#21046;&#22238;&#20659;&#25976;">limit &#38480;&#21046;&#22238;&#20659;&#25976;<a class="anchor-link" href="#limit-&#38480;&#21046;&#22238;&#20659;&#25976;">&#182;</a></h3><ul>
 <li>optionally, use method <code>.limit(n)</code> or <code>?limit=n</code> to restrict the number of objects returned<ul>
 <li>on a field:<ul>
 <li><code>me?fields=photos.limit(10)</code></li>
@@ -354,14 +358,13 @@ div.output_prompt {
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="modifier:-summary-&#35336;&#31639;&#32317;&#37327;">modifier: summary &#35336;&#31639;&#32317;&#37327;<a class="anchor-link" href="#modifier:-summary-&#35336;&#31639;&#32317;&#37327;">&#182;</a></h2><ul>
+<h3 id="summary-&#35336;&#31639;&#32317;&#37327;">summary &#35336;&#31639;&#32317;&#37327;<a class="anchor-link" href="#summary-&#35336;&#31639;&#32317;&#37327;">&#182;</a></h3><ul>
 <li>fields (or edges) with multiple entities usually have a summary containing their counts<ul>
 <li>on a field:<ul>
 <li><code>&lt;photo_id&gt;?fields=likes.summary(true)</code></li>
@@ -377,14 +380,13 @@ div.output_prompt {
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="modifier-chaining-&#26041;&#27861;&#37832;&#32080;">modifier chaining &#26041;&#27861;&#37832;&#32080;<a class="anchor-link" href="#modifier-chaining-&#26041;&#27861;&#37832;&#32080;">&#182;</a></h2><ul>
+<h2 id="chaining-&#20462;&#39166;&#35486;&#37832;&#32080;">chaining &#20462;&#39166;&#35486;&#37832;&#32080;<a class="anchor-link" href="#chaining-&#20462;&#39166;&#35486;&#37832;&#32080;">&#182;</a></h2><ul>
 <li>on a field:<ul>
 <li><code>&lt;photo_id&gt;?files=likes.limit(1).summary(true)</code></li>
 </ul>
@@ -397,8 +399,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -415,17 +416,24 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="scenario:-who-likes-my-posts?">scenario: who likes my posts?<a class="anchor-link" href="#scenario:-who-likes-my-posts?">&#182;</a></h2><h2 id="&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#35738;&#65311;">&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#35738;&#65311;<a class="anchor-link" href="#&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#35738;&#65311;">&#182;</a></h2><ol>
-<li>start from the <code>me</code> node</li>
-<li>what fields a post can have?<ul>
-<li>use <code>?metadata=1</code> on any one of your post (try <code>me/posts</code> first)</li>
-<li>"likes" are indeed edges (connections) instead of fields</li>
-<li>still, we can use it in the field query (just as <code>me/photos</code> to <code>me?fields=photos</code>)</li>
+<h2 id="scenario:-who-likes-my-posts?">scenario: who likes my posts?<a class="anchor-link" href="#scenario:-who-likes-my-posts?">&#182;</a></h2><h2 id="&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#30340;&#25991;&#31456;&#35738;&#65311;">&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#30340;&#25991;&#31456;&#35738;&#65311;<a class="anchor-link" href="#&#25578;&#31455;&#65292;&#26159;&#35504;&#22312;&#25353;&#25105;&#30340;&#25991;&#31456;&#35738;&#65311;">&#182;</a></h2><ol>
+<li>從me結點出發</li>
+<li>在me節點的文章有哪些？<ul>
+<li>以連結語法查詢：<code>me/posts</code></li>
+<li>或者以欄位語法查詢：<code>me?fields=posts</code></li>
 </ul>
 </li>
-<li>setup a time range by using the <code>since</code> modifier =&gt; <a href="http://www.epochconverter.com">timestamp converter</a></li>
-<li>get total count using the <code>summary</code> modifier</li>
-<li>finally, something like this:<ul>
+<li>一篇文章有哪些欄位？<ul>
+<li>先隨便挑一篇文章當作新查詢的起點，使用<code>?metadata=1</code>來觀察</li>
+<li>按讚數是欄位還是連結？</li>
+</ul>
+</li>
+<li>使用since修飾語來做時間區間的限制<ul>
+<li><a href="http://www.epochconverter.com">timestamp converter</a></li>
+</ul>
+</li>
+<li>使用summary修飾語取得按讚的總數</li>
+<li>參考答案：<ul>
 <li><code>me/posts?fields=likes.fields(name).summary(true)&amp;since=1420070400&amp;limit=100</code></li>
 </ul>
 </li>
@@ -433,6 +441,29 @@ div.output_prompt {
 
 </div>
 </div>
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="other-syntax-&#36028;&#25991;,-&#30041;&#35328;,-&#33287;&#21034;&#38500;">other syntax &#36028;&#25991;, &#30041;&#35328;, &#33287;&#21034;&#38500;<a class="anchor-link" href="#other-syntax-&#36028;&#25991;,-&#30041;&#35328;,-&#33287;&#21034;&#38500;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
 </div></section>
     </section><section>
     <section>
@@ -5210,7 +5241,7 @@ AAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Regular-Expression">Regular Expression<a class="anchor-link" href="#Regular-Expression">&#182;</a></h2>
+<h1 id="Regular-Expression">Regular Expression<a class="anchor-link" href="#Regular-Expression">&#182;</a></h1><h2 id="&#27491;&#35215;&#34920;&#36948;&#24335;">&#27491;&#35215;&#34920;&#36948;&#24335;<a class="anchor-link" href="#&#27491;&#35215;&#34920;&#36948;&#24335;">&#182;</a></h2>
 </div>
 </div>
 </div></section><section>
@@ -5853,7 +5884,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Regex-in-Python-|-Basic">Regex in Python<span style="color:blue"> | Basic</span><a class="anchor-link" href="#Regex-in-Python-|-Basic">&#182;</a></h2>
+<h1 id="Regex-in-Python-|-Basic">Regex in Python<span style="color:blue"> | Basic</span><a class="anchor-link" href="#Regex-in-Python-|-Basic">&#182;</a></h1><h2 id="&#22312;Python&#20351;&#29992;&#27491;&#35215;&#34920;&#36948;&#24335;">&#22312;Python&#20351;&#29992;&#27491;&#35215;&#34920;&#36948;&#24335;<a class="anchor-link" href="#&#22312;Python&#20351;&#29992;&#27491;&#35215;&#34920;&#36948;&#24335;">&#182;</a></h2>
 </div>
 </div>
 </div></section><section>
@@ -6937,7 +6968,7 @@ are you coded no.1?
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Regex-in-Python-|-Advanced">Regex in Python<span style="color:blue"> | Advanced</span><a class="anchor-link" href="#Regex-in-Python-|-Advanced">&#182;</a></h2><p>regex extensions: <code>(?&lt;pattern&gt;)</code></p>
+<h1 id="Regex-in-Python-|-Advanced">Regex in Python<span style="color:blue"> | Advanced</span><a class="anchor-link" href="#Regex-in-Python-|-Advanced">&#182;</a></h1><h2 id="&#36914;&#38542;&#30340;&#27491;&#35215;&#34920;&#36948;&#24335;">&#36914;&#38542;&#30340;&#27491;&#35215;&#34920;&#36948;&#24335;<a class="anchor-link" href="#&#36914;&#38542;&#30340;&#27491;&#35215;&#34920;&#36948;&#24335;">&#182;</a></h2><p>regex extensions: <code>(?&lt;pattern&gt;)</code></p>
 
 </div>
 </div>
@@ -7119,9 +7150,10 @@ string returned by .groups:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Reference">Reference<a class="anchor-link" href="#Reference">&#182;</a></h2><ul>
+<h1 id="Reference">Reference<a class="anchor-link" href="#Reference">&#182;</a></h1><ul>
 <li><a href="https://developers.facebook.com/docs/graph-api/reference/">Facebook official Graph API reference</a></li>
 <li><a href="https://docs.python.org/2/howto/regex.html">Python official re tutorial</a></li>
+<li><a href="http://www.epochconverter.com">Unix timestamp converter</a></li>
 <li>regex visualizer / tester:<ul>
 <li><a href="https://www.debuggex.com">Debuggex</a></li>
 <li><a href="https://regex101.com/#python">regex101</a></li>
@@ -7131,6 +7163,150 @@ string returned by .groups:
 
 </div>
 </div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Appendix">Appendix<a class="anchor-link" href="#Appendix">&#182;</a></h1><ul>
+<li>Python function decorator usage</li>
+</ul>
+
+</div>
+</div>
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Python-function-decorator-example">Python function decorator example<a class="anchor-link" href="#Python-function-decorator-example">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">printArgs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">arg</span>
+
+<span class="n">printArgs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1
+2
+3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># decorator without argument</span>
+<span class="k">def</span> <span class="nf">decorate</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;decorated!&quot;</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@decorate</span>
+<span class="k">def</span> <span class="nf">printArgs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">arg</span>
+
+<span class="n">printArgs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>decorated!
+1
+2
+3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># decorator with argument(s)</span>
+<span class="k">def</span> <span class="nf">decorateWithArg</span><span class="p">(</span><span class="n">dname</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">realWrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&quot;decorated by </span><span class="si">%s</span><span class="s">!&quot;</span> <span class="o">%</span> <span class="n">dname</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
+    <span class="k">return</span> <span class="n">realWrapper</span>
+
+<span class="nd">@decorateWithArg</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">printArgs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">arg</span>
+
+<span class="n">printArgs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>decorated by test!
+1
+2
+3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div></section>
     </section>
 </div>
