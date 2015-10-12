@@ -7950,7 +7950,7 @@ are you coded no.1?
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[122]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;Things are getting HARDER! Now try capturing CamelUpperCased word(s).&quot;</span>
@@ -8113,7 +8113,7 @@ CamelUpperCased
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[160]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># to see things clearly</span>
@@ -8129,11 +8129,153 @@ CamelUpperCased
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[160]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[67]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>[(&apos;Things&apos;, &apos;Things&apos;), (&apos;Now&apos;, &apos;Now&apos;), (&apos;CamelUpperCased&apos;, &apos;Cased&apos;)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="the-substitution-method-&#23383;&#20018;&#21462;&#20195;">the substitution method &#23383;&#20018;&#21462;&#20195;<a class="anchor-link" href="#the-substitution-method-&#23383;&#20018;&#21462;&#20195;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;ABCdef&quot;</span>
+
+<span class="c"># direct compile</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;[A-Z]&quot;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[70]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&apos;111def&apos;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># implicit compile</span>
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;[A-Z]&quot;</span><span class="p">,</span> <span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[73]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&apos;111def&apos;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># restrict number of replacements</span>
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;[A-Z]&quot;</span><span class="p">,</span> <span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[75]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&apos;1BCdef&apos;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="function-as-replacement">function as replacement<a class="anchor-link" href="#function-as-replacement">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[78]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;ABCdefghij&quot;</span>
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;[a-z]+&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">group</span><span class="p">())),</span> <span class="n">test_str</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[78]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&apos;ABC7&apos;</pre>
 </div>
 
 </div>
@@ -8169,7 +8311,7 @@ CamelUpperCased
 <li>non-capturer: <code>(?:&lt;pattern&gt;)</code></li>
 <li>ahead-looker: <code>(?=&lt;pattern&gt;)</code> and <code>(?!&lt;pattern&gt;)</code></li>
 <li>named-grouper: <code>(?P&lt;gname&gt;)</code></li>
-<li>backreferer: <code>(?p=&lt;gname&gt;)</code></li>
+<li>backreferer: <code>(?P=&lt;gname&gt;)</code></li>
 </ul>
 
 </div>
@@ -8181,23 +8323,34 @@ CamelUpperCased
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="non-capturer:-(?:...)">non-capturer: <code>(?:...)</code><a class="anchor-link" href="#non-capturer:-(?:...)">&#182;</a></h3><p>to match without returning matched</p>
+<h3 id="non-capturer:-(?:...)-&#65372;&#21305;&#37197;&#20294;&#19981;&#25235;&#21462;">non-capturer: <code>(?:...)</code> &#65372;&#21305;&#37197;&#20294;&#19981;&#25235;&#21462;<a class="anchor-link" href="#non-capturer:-(?:...)-&#65372;&#21305;&#37197;&#20294;&#19981;&#25235;&#21462;">&#182;</a></h3><p>to match without returning matched</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;fact.1: 1 round for Daan Park is 2350m&quot;</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;(?:^.*: )(\d+)&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;string returned by .group: </span><span class="se">\n\t</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
-<span class="k">print</span> <span class="s">&quot;string returned by .groups: </span><span class="se">\n\t</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span>
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">re</span>
 
-<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;(^.*:)&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;metadata:{name: kyle, age: 18, gender: male}&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;(name: )(\w+)&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;string returned by .group  =&gt; </span><span class="se">\t</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">&quot;string returned by .groups =&gt; </span><span class="se">\t</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span>
 </pre></div>
 
 </div>
@@ -8210,11 +8363,8 @@ CamelUpperCased
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>string returned by .group: 
-	fact.1: 1
-string returned by .groups: 
-	(&apos;1&apos;,)
-(&apos;fact.1:&apos;,)
+<pre>string returned by .group  =&gt; 	name: kyle
+string returned by .groups =&gt; 	(&apos;name: &apos;, &apos;kyle&apos;)
 </pre>
 </div>
 </div>
@@ -8222,23 +8372,46 @@ string returned by .groups:
 </div>
 </div>
 
-</div></section><section>
-    
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="back-to-the-challenge!">back to the challenge!<a class="anchor-link" href="#back-to-the-challenge!">&#182;</a></h3>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">test_str</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;my code is 12&quot;</span><span class="p">,</span> 
+<div class=" highlight hl-ipython2"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;(?:name: )(\w+)&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;string returned by .group  =&gt; </span><span class="se">\t</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">&quot;string returned by .groups =&gt; </span><span class="se">\t</span><span class="s">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>string returned by .group  =&gt; 	name: kyle
+string returned by .groups =&gt; 	(&apos;kyle&apos;,)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># back to the previous exercise:</span>
+<span class="c"># match first digits after string &quot;code&quot;</span>
+
+<span class="n">test_str</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;my code is 12&quot;</span><span class="p">,</span> 
             <span class="s">&quot;Mr. lucky7&#39;s code is 76&quot;</span><span class="p">,</span>
             <span class="s">&quot;are you coded no.1?&quot;</span><span class="p">]</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;(?:code)[^0-9]*(\d+)&quot;</span><span class="p">)</span>
@@ -8253,7 +8426,7 @@ string returned by .groups:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[55]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -8265,47 +8438,355 @@ string returned by .groups:
 </div>
 </div>
 
-</div></section><section>
-    
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="ahead-looker:-(?=...)-and-(?!...)">ahead-looker: <code>(?=...)</code> and <code>(?!...)</code><a class="anchor-link" href="#ahead-looker:-(?=...)-and-(?!...)">&#182;</a></h3><p>only to match when the asserted string is (not) matched first</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="ahead-looker:-(?=...)-and-(?!...)-&#65372;&#26781;&#20214;&#24448;&#21069;&#25214;">ahead-looker: <code>(?=...)</code> and <code>(?!...)</code> &#65372;&#26781;&#20214;&#24448;&#21069;&#25214;<a class="anchor-link" href="#ahead-looker:-(?=...)-and-(?!...)-&#65372;&#26781;&#20214;&#24448;&#21069;&#25214;">&#182;</a></h3><p>only to match when the asserted string is (not) matched first</p>
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># again, match first digits after string &quot;code&quot;</span>
+
+<span class="n">test_str</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;my code is 12&quot;</span><span class="p">,</span> 
+            <span class="s">&quot;Mr. lucky7&#39;s code is 76&quot;</span><span class="p">,</span>
+            <span class="s">&quot;are you coded no.1?&quot;</span><span class="p">]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;(?=code)[^0-9]*(\d+)&quot;</span><span class="p">)</span>
+<span class="p">[</span> <span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span> <span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[25]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&apos;12&apos;,), (&apos;76&apos;,), (&apos;1&apos;,)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="named-grouper:-(?P&lt;gname&gt;)">named-grouper: <code>(?P&lt;gname&gt;)</code><a class="anchor-link" href="#named-grouper:-(?P&lt;gname&gt;)">&#182;</a></h3><p>a python-specific extension</p>
+<h3 id="named-grouper:-(?P&lt;gname&gt;)&#65372;&#21629;&#21517;&#32676;&#32068;">named-grouper: <code>(?P&lt;gname&gt;)</code>&#65372;&#21629;&#21517;&#32676;&#32068;<a class="anchor-link" href="#named-grouper:-(?P&lt;gname&gt;)&#65372;&#21629;&#21517;&#32676;&#32068;">&#182;</a></h3><p>a python-specific extension</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;metadata:{name: kyle, age: 18, gender: male}&quot;</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;(name: )(\w+).*(age: )(\d+)&quot;</span><span class="p">)</span>
+<span class="n">m1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">test_str</span><span class="p">)</span>
+<span class="n">m1</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[37]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(&apos;name: &apos;, &apos;kyle&apos;, &apos;age: &apos;, &apos;18&apos;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">p2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;(name: )(?P&lt;username&gt;\w+).*(age: )(?P&lt;userage&gt;\d+)&quot;</span><span class="p">)</span>
+<span class="n">m2</span> <span class="o">=</span> <span class="n">p2</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">test_str</span><span class="p">)</span>
+<span class="n">m2</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[43]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(&apos;name: &apos;, &apos;kyle&apos;, &apos;age: &apos;, &apos;18&apos;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">m2</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[44]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&apos;userage&apos;: &apos;18&apos;, &apos;username&apos;: &apos;kyle&apos;}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="backreferer:-(?P=gname)">backreferer: <code>(?P=gname)</code><a class="anchor-link" href="#backreferer:-(?P=gname)">&#182;</a></h3><p>yet anotehr python-specific extension</p>
+<h3 id="backreferer-by-name:-(?P=gname)&#65372;&#24448;&#22238;&#21443;&#29031;">backreferer by name: <code>(?P=gname)</code>&#65372;&#24448;&#22238;&#21443;&#29031;<a class="anchor-link" href="#backreferer-by-name:-(?P=gname)&#65372;&#24448;&#22238;&#21443;&#29031;">&#182;</a></h3><p>yet anotehr python-specific extension</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[146]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># usage of backrefer</span>
+
+<span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;This test is a test about backrefer.&quot;</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;(test)(.*)</span><span class="se">\\</span><span class="s">1&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[146]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(&apos;test&apos;, &apos; is a &apos;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[167]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># usage of backrefer by name (python-specific)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;(?P&lt;g1&gt;test)(.*)(?P=g1)&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[167]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(&apos;test&apos;, &apos;(a) and test(b) should be replaced while &apos;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[179]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># backreference and replacement</span>
+
+<span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;test(a) and test(b) should be replaced while test should not&quot;</span>
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;test\(([a-z])\)&quot;</span><span class="p">,</span> <span class="s">&quot;new(</span><span class="se">\\</span><span class="s">1)&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[179]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&apos;new(a) and new(b) should be replaced while test should not&apos;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[177]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># alternatively:</span>
+
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;test\((?P&lt;target&gt;[a-z])\)&quot;</span><span class="p">,</span> <span class="s">&quot;new(\g&lt;1&gt;)&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[177]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&apos;new(a) and new(b) should be replaced while test should not&apos;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[176]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># or by name</span>
+
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;test\((?P&lt;target&gt;[a-z])\)&quot;</span><span class="p">,</span> <span class="s">&quot;new(\g&lt;target&gt;)&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[176]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&apos;new(a) and new(b) should be replaced while test should not&apos;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[182]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># surprisingly not working:</span>
+<span class="c"># (?P=name) must be used along with (?P&lt;name&gt;) in the same expression</span>
+<span class="c"># in case of replacement operation, the above does not hold</span>
+
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;test\((?P&lt;target&gt;[a-z])\)&quot;</span><span class="p">,</span> <span class="s">&quot;new((?P=target))&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[182]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&apos;new((?P=target)) and new((?P=target)) should be replaced while test should not&apos;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div></section><section>
     
 <div class="cell border-box-sizing text_cell rendered">
@@ -8320,7 +8801,7 @@ string returned by .groups:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[162]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="s">&quot;a string&quot;</span>
@@ -8337,6 +8818,34 @@ string returned by .groups:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>a string
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s"> a string with newline&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ a string with newline
 </pre>
 </div>
 </div>
@@ -8557,7 +9066,8 @@ string returned by .groups:
 </div>
 </div>
 
-</div>
+</div></section><section>
+    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -9109,6 +9619,8 @@ Reveal.initialize({
 controls: true,
 progress: true,
 history: true,
+
+width: 1080,
 
 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
