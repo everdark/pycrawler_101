@@ -5526,7 +5526,7 @@ get 25 post(s) from Chen John
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Regular-Expression">Regular Expression<a class="anchor-link" href="#Regular-Expression">&#182;</a></h1><h2 id="&#27491;&#35215;&#34920;&#36948;&#24335;">&#27491;&#35215;&#34920;&#36948;&#24335;<a class="anchor-link" href="#&#27491;&#35215;&#34920;&#36948;&#24335;">&#182;</a></h2>
+<h1 id="Regular-Expression">Regular Expression<a class="anchor-link" href="#Regular-Expression">&#182;</a></h1><h2 id="&#27491;&#35215;&#34920;&#31034;&#27861;">&#27491;&#35215;&#34920;&#31034;&#27861;<a class="anchor-link" href="#&#27491;&#35215;&#34920;&#31034;&#27861;">&#182;</a></h2>
 </div>
 </div>
 </div></section><section>
@@ -5536,9 +5536,14 @@ get 25 post(s) from Chen John
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="what-is-re?">what is re?<a class="anchor-link" href="#what-is-re?">&#182;</a></h3><p>from wikipedia:</p>
-<blockquote><p>a regular expression (abbreviated regex or regexp and sometimes called a rational expression) is a sequence of characters that define a search pattern, mainly for use in pattern matching with strings, or string matching, i.e. "find and replace"-like operations.</p>
+<h2 id="what-is-re?-&#23427;&#26159;&#20160;&#40636;&#65311;">what is re? &#23427;&#26159;&#20160;&#40636;&#65311;<a class="anchor-link" href="#what-is-re?-&#23427;&#26159;&#20160;&#40636;&#65311;">&#182;</a></h2><ul>
+<li><p>from wikipedia:</p>
+<blockquote><p>a regular expression (abbreviated regex or regexp and sometimes called a rational expression) is <strong>a sequence of characters that define a search pattern</strong>, mainly for use in pattern matching with strings, or string matching, i.e. "find and replace"-like operations.</p>
 </blockquote>
+</li>
+<li><p><span style="font-size:20pt;">「一串字元，用來表示一種可供匹配搜尋的字串模式。」</span></p>
+</li>
+</ul>
 
 </div>
 </div>
@@ -5549,16 +5554,30 @@ get 25 post(s) from Chen John
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="why-re?">why re?<a class="anchor-link" href="#why-re?">&#182;</a></h3><p>imagine there is a dataset looks like this...</p>
-<blockquote><p>kyle chung; (02)2256-1116; New Taipei City 
+<h2 id="why-re?-&#28858;&#20160;&#40636;&#38656;&#35201;&#23427;&#65311;">why re? &#28858;&#20160;&#40636;&#38656;&#35201;&#23427;&#65311;<a class="anchor-link" href="#why-re?-&#28858;&#20160;&#40636;&#38656;&#35201;&#23427;&#65311;">&#182;</a></h2>
+</div>
+</div>
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="little-dataset,-big-trouble">little dataset, big trouble<a class="anchor-link" href="#little-dataset,-big-trouble">&#182;</a></h2><h2 id="&#21021;&#25136;-&#27491;&#35215;&#34920;&#31034;&#27861;&#65306;&#38651;&#35441;&#34399;&#30908;&#22320;&#29508;">&#21021;&#25136; &#27491;&#35215;&#34920;&#31034;&#27861;&#65306;&#38651;&#35441;&#34399;&#30908;&#22320;&#29508;<a class="anchor-link" href="#&#21021;&#25136;-&#27491;&#35215;&#34920;&#31034;&#27861;&#65306;&#38651;&#35441;&#34399;&#30908;&#22320;&#29508;">&#182;</a></h2><blockquote><p>kyle chung; (02)2256-1116; New Taipei City
 <br>
 Mr. Funghi,Earth Anywhere, 07-21180293
 <br>
 free tel: 0800 000 123 #1234
 <br>
-2945 1412  street no.123  Dr.A(not Dr.B)</p>
+Dr.A (not Dr.B) street no.123 2945 1412</p>
 </blockquote>
-<p>YOUR BOSS: "Give me all the telphone numbers only."</p>
+<ul>
+<li>requirement:<ul>
+<li>extract all <em>telephone numbers</em> in the above four records</li>
+</ul>
+</li>
+</ul>
 
 </div>
 </div>
@@ -5566,22 +5585,35 @@ free tel: 0800 000 123 #1234
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">re</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># let&#39;s make a playground!</span>
+<span class="kn">import</span> <span class="nn">re</span>
 
 <span class="n">test_str</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;kyle chung; (02)2256-1116; New Taipei City&quot;</span><span class="p">,</span>
             <span class="s">&quot;Mr. Funghi,Earth Anywhere, 07-21180293&quot;</span><span class="p">,</span>
             <span class="s">&quot;free tel: 0800 000 123 #1234&quot;</span><span class="p">,</span>
             <span class="s">&quot;Dr.A (not Dr.B) street no.123 2945 1412&quot;</span><span class="p">]</span>
 
-<span class="k">def</span> <span class="nf">giveMeTel</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">test_str</span><span class="o">=</span><span class="n">test_str</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">findFirstMatched</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">test_str</span><span class="o">=</span><span class="n">test_str</span><span class="p">):</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">=== result of findFirstMatched ===&quot;</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_str</span><span class="p">):</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
-            <span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+            <span class="k">print</span> <span class="s">&quot;row </span><span class="si">%s</span><span class="s">:&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;row </span><span class="si">%s</span><span class="s">: no match&quot;</span> <span class="o">%</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">findAllMatched</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">test_str</span><span class="o">=</span><span class="n">test_str</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">=== result of findAllMatched ===&quot;</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_str</span><span class="p">):</span>
+        <span class="n">matched</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;row </span><span class="si">%s</span><span class="s">: &quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span> <span class="n">matched</span>
+    <span class="k">return</span> <span class="bp">None</span>
 </pre></div>
 
 </div>
@@ -5591,12 +5623,93 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># test first-matched</span>
+
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;3&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+=== result of findFirstMatched ===
+row 0: no match
+row 1: 3
+row 2: 3
+row 3: 3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># test all-matched</span>
+
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;3&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+=== result of findAllMatched ===
+row 0:  []
+row 1:  [&apos;3&apos;]
+row 2:  [&apos;3&apos;, &apos;3&apos;]
+row 3:  [&apos;3&apos;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#25214;&#20986;&#20219;&#19968;&#25976;&#23383;">&#25214;&#20986;&#20219;&#19968;&#25976;&#23383;<a class="anchor-link" href="#&#25214;&#20986;&#20219;&#19968;&#25976;&#23383;">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># 1st try: get all digits</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
     
-<span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;[0-9]&quot;</span><span class="p">)</span>
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;[0-9]&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;[0-9]&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -5609,10 +5722,22 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>0
-0
-0
-1
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: 0
+row 1: 0
+row 2: 0
+row 3: 1
+
+=== result of findAllMatched ===
+row 0:  [&apos;0&apos;, &apos;2&apos;, &apos;2&apos;, &apos;2&apos;, &apos;5&apos;, &apos;6&apos;, &apos;1&apos;, &apos;1&apos;, &apos;1&apos;, &apos;6&apos;]
+row 1:  [&apos;0&apos;, &apos;7&apos;, &apos;2&apos;, &apos;1&apos;, &apos;1&apos;, &apos;8&apos;, &apos;0&apos;, &apos;2&apos;, &apos;9&apos;, &apos;3&apos;]
+row 2:  [&apos;0&apos;, &apos;8&apos;, &apos;0&apos;, &apos;0&apos;, &apos;0&apos;, &apos;0&apos;, &apos;0&apos;, &apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;]
+row 3:  [&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;2&apos;, &apos;9&apos;, &apos;4&apos;, &apos;5&apos;, &apos;1&apos;, &apos;4&apos;, &apos;1&apos;, &apos;2&apos;]
 </pre>
 </div>
 </div>
@@ -5621,14 +5746,27 @@ free tel: 0800 000 123 #1234
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#25214;&#20986;&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;">&#25214;&#20986;&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;<a class="anchor-link" href="#&#25214;&#20986;&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;">&#182;</a></h3>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># 2nd try: get all digits, not just one</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
     
-<span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;[0-9]+&quot;</span><span class="p">)</span>
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;[0-9]+&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;[0-9]+&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -5641,10 +5779,22 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>02
-07
-0800
-123
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: 02
+row 1: 07
+row 2: 0800
+row 3: 123
+
+=== result of findAllMatched ===
+row 0:  [&apos;02&apos;, &apos;2256&apos;, &apos;1116&apos;]
+row 1:  [&apos;07&apos;, &apos;21180293&apos;]
+row 2:  [&apos;0800&apos;, &apos;000&apos;, &apos;123&apos;, &apos;1234&apos;]
+row 3:  [&apos;123&apos;, &apos;2945&apos;, &apos;1412&apos;]
 </pre>
 </div>
 </div>
@@ -5653,14 +5803,26 @@ free tel: 0800 000 123 #1234
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#25214;&#20986;&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;&#65292;&#21487;&#21253;&#21547;&#36899;&#23383;&#34399;">&#25214;&#20986;&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;&#65292;&#21487;&#21253;&#21547;&#36899;&#23383;&#34399;<a class="anchor-link" href="#&#25214;&#20986;&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;&#65292;&#21487;&#21253;&#21547;&#36899;&#23383;&#34399;">&#182;</a></h3>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># 3rd try: get all digits, not just one, and dash</span>
-    
-<span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;[0-9-]+&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;[0-9-]+&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;[0-9-]+&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -5673,10 +5835,22 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>02
-07-21180293
-0800
-123
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: 02
+row 1: 07-21180293
+row 2: 0800
+row 3: 123
+
+=== result of findAllMatched ===
+row 0:  [&apos;02&apos;, &apos;2256-1116&apos;]
+row 1:  [&apos;07-21180293&apos;]
+row 2:  [&apos;0800&apos;, &apos;000&apos;, &apos;123&apos;, &apos;1234&apos;]
+row 3:  [&apos;123&apos;, &apos;2945&apos;, &apos;1412&apos;]
 </pre>
 </div>
 </div>
@@ -5685,14 +5859,27 @@ free tel: 0800 000 123 #1234
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;&#65292;&#21487;&#21253;&#21547;&#36899;&#23383;&#34399;&#33287;&#23567;&#25324;&#34399;">&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;&#65292;&#21487;&#21253;&#21547;&#36899;&#23383;&#34399;&#33287;&#23567;&#25324;&#34399;<a class="anchor-link" href="#&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;&#65292;&#21487;&#21253;&#21547;&#36899;&#23383;&#34399;&#33287;&#23567;&#25324;&#34399;">&#182;</a></h3>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># 4th try: get all digits, not just one, and dash and paranthesis and blanks...</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
     
-<span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;[0-9-()]+&quot;</span><span class="p">)</span>
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;[0-9-()]+&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;[0-9-()]+&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -5705,10 +5892,22 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(02)2256-1116
-07-21180293
-0800
-(
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: (02)2256-1116
+row 1: 07-21180293
+row 2: 0800
+row 3: (
+
+=== result of findAllMatched ===
+row 0:  [&apos;(02)2256-1116&apos;]
+row 1:  [&apos;07-21180293&apos;]
+row 2:  [&apos;0800&apos;, &apos;000&apos;, &apos;123&apos;, &apos;1234&apos;]
+row 3:  [&apos;(&apos;, &apos;)&apos;, &apos;123&apos;, &apos;2945&apos;, &apos;1412&apos;]
 </pre>
 </div>
 </div>
@@ -5717,14 +5916,27 @@ free tel: 0800 000 123 #1234
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;&#65292;&#21487;&#21547;&#36899;&#23383;&#34399;&#12289;&#23567;&#25324;&#34399;&#12289;&#33287;&#31354;&#26684;">&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;&#65292;&#21487;&#21547;&#36899;&#23383;&#34399;&#12289;&#23567;&#25324;&#34399;&#12289;&#33287;&#31354;&#26684;<a class="anchor-link" href="#&#20219;&#19968;&#20018;&#36899;&#32396;&#25976;&#23383;&#65292;&#21487;&#21547;&#36899;&#23383;&#34399;&#12289;&#23567;&#25324;&#34399;&#12289;&#33287;&#31354;&#26684;">&#182;</a></h3>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># now allow blanks, oops!</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
     
-<span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;[0-9-() ]+&quot;</span><span class="p">)</span>
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;[0-9-() ]+&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;[0-9-() ]+&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -5737,10 +5949,79 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre> 
- 
- 
- (
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0:  
+row 1:  
+row 2:  
+row 3:  (
+
+=== result of findAllMatched ===
+row 0:  [&apos; &apos;, &apos; (02)2256-1116&apos;, &apos; &apos;, &apos; &apos;, &apos; &apos;]
+row 1:  [&apos; &apos;, &apos; &apos;, &apos; 07-21180293&apos;]
+row 2:  [&apos; &apos;, &apos; 0800 000 123 &apos;, &apos;1234&apos;]
+row 3:  [&apos; (&apos;, &apos; &apos;, &apos;) &apos;, &apos; &apos;, &apos;123 2945 1412&apos;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#23567;&#25324;&#34399;&#12300;&#21487;&#26377;&#21487;&#28961;&#12301;">&#23567;&#25324;&#34399;&#12300;&#21487;&#26377;&#21487;&#28961;&#12301;<a class="anchor-link" href="#&#23567;&#25324;&#34399;&#12300;&#21487;&#26377;&#21487;&#28961;&#12301;">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># test for optional parenthesis</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]+\)?&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]+\)?&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: (02)
+row 1: 07
+row 2: 0800
+row 3: 123
+
+=== result of findAllMatched ===
+row 0:  [&apos;(02)&apos;, &apos;2256&apos;, &apos;1116&apos;]
+row 1:  [&apos;07&apos;, &apos;21180293&apos;]
+row 2:  [&apos;0800&apos;, &apos;000&apos;, &apos;123&apos;, &apos;1234&apos;]
+row 3:  [&apos;123&apos;, &apos;2945&apos;, &apos;1412&apos;]
 </pre>
 </div>
 </div>
@@ -5751,12 +6032,16 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># !(@#$&amp;!@#*$!(@&amp;%(!@*...</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># optional parenthesis/dash and consecutive numbers</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
     
-<span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;\(?[0-9]+\)?&quot;</span><span class="p">)</span>
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]+\)?[0-9-]+&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]+\)?[0-9-]+&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -5769,10 +6054,22 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(02)
-07
-0800
-123
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: (02)2256-1116
+row 1: 07-21180293
+row 2: 0800
+row 3: 123
+
+=== result of findAllMatched ===
+row 0:  [&apos;(02)2256-1116&apos;]
+row 1:  [&apos;07-21180293&apos;]
+row 2:  [&apos;0800&apos;, &apos;000&apos;, &apos;123&apos;, &apos;1234&apos;]
+row 3:  [&apos;123&apos;, &apos;2945&apos;, &apos;1412&apos;]
 </pre>
 </div>
 </div>
@@ -5783,10 +6080,16 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;\(?[0-9]+\)?[0-9-]+&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># optional parenthesis/dash and consecutive numbers/blanks</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]+\)?[0-9- ]+&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]+\)?[0-9- ]+&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -5799,10 +6102,79 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(02)2256-1116
-07-21180293
-0800
-123
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: (02)2256-1116
+row 1: 07-21180293
+row 2: 0800 000 123 
+row 3: 123 2945 1412
+
+=== result of findAllMatched ===
+row 0:  [&apos;(02)2256-1116&apos;]
+row 1:  [&apos;07-21180293&apos;]
+row 2:  [&apos;0800 000 123 &apos;, &apos;1234&apos;]
+row 3:  [&apos;123 2945 1412&apos;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#38480;&#21046;&#20986;&#29694;&#27425;&#25976;">&#38480;&#21046;&#20986;&#29694;&#27425;&#25976;<a class="anchor-link" href="#&#38480;&#21046;&#20986;&#29694;&#27425;&#25976;">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># restrict numbers of digits</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+    
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]{0,2}\)?-?[0-9]{4}[ -]?[0-9]{4}&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]{0,2}\)?-?[0-9]{4}[ -]?[0-9]{4}&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: (02)2256-1116
+row 1: 07-21180293
+row 2: no match
+row 3: 2945 1412
+
+=== result of findAllMatched ===
+row 0:  [&apos;(02)2256-1116&apos;]
+row 1:  [&apos;07-21180293&apos;]
+row 2:  []
+row 3:  [&apos;2945 1412&apos;]
 </pre>
 </div>
 </div>
@@ -5813,10 +6185,16 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;\(?[0-9]+\)?[0-9-]+&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># build a second pattern</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;[0-9]{4}[ ]?[0-9]{3}[ ]?[0-9]{3}&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;[0-9]{4}[ ]?[0-9]{3}[ ]?[0-9]{3}&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -5829,10 +6207,22 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(02)2256-1116
-07-21180293
-0800
-123
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: no match
+row 1: no match
+row 2: 0800 000 123
+row 3: no match
+
+=== result of findAllMatched ===
+row 0:  []
+row 1:  []
+row 2:  [&apos;0800 000 123&apos;]
+row 3:  []
 </pre>
 </div>
 </div>
@@ -5841,12 +6231,27 @@ free tel: 0800 000 123 #1234
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#20841;&#31278;&#27169;&#24335;&#20219;&#19968;&#21563;&#21512;">&#20841;&#31278;&#27169;&#24335;&#20219;&#19968;&#21563;&#21512;<a class="anchor-link" href="#&#20841;&#31278;&#27169;&#24335;&#20219;&#19968;&#21563;&#21512;">&#182;</a></h3>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;\(?[0-9]+\)?[0-9- ]+&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># combine two patterns with or operator</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]{0,2}\)?-?[0-9]{4}[ -]?[0-9]{4}|[0-9]{4}[ ]?[0-9]{3}[ ]?[0-9]{3}&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]{0,2}\)?-?[0-9]{4}[ -]?[0-9]{4}|[0-9]{4}[ ]?[0-9]{3}[ ]?[0-9]{3}&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -5859,10 +6264,22 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(02)2256-1116
-07-21180293
-0800 000 123 
-123 2945 1412
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: (02)2256-1116
+row 1: 07-21180293
+row 2: 0800 000 123
+row 3: 2945 1412
+
+=== result of findAllMatched ===
+row 0:  [&apos;(02)2256-1116&apos;]
+row 1:  [&apos;07-21180293&apos;]
+row 2:  [&apos;0800 000 123&apos;]
+row 3:  [&apos;2945 1412&apos;]
 </pre>
 </div>
 </div>
@@ -5871,12 +6288,27 @@ free tel: 0800 000 123 #1234
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#26368;&#24460;&#19968;&#27493;&#65281;&#20801;&#35377;&#20998;&#27231;&#34399;&#30908;">&#26368;&#24460;&#19968;&#27493;&#65281;&#20801;&#35377;&#20998;&#27231;&#34399;&#30908;<a class="anchor-link" href="#&#26368;&#24460;&#19968;&#27493;&#65281;&#20801;&#35377;&#20998;&#27231;&#34399;&#30908;">&#182;</a></h3>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;\(?[0-9]{0,2}\)?-?[0-9]{4}[ -]?[0-9]{4}&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># deal with optional extension digits</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]{0,2}\)?-?[0-9]{4}[ -]?[0-9]{4}|[0-9]{4}[ ]?[0-9]{3}[ ]?[0-9]{3}[ ]?#?[0-9]+&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;\(?[0-9]{0,2}\)?-?[0-9]{4}[ -]?[0-9]{4}|[0-9]{4}[ ]?[0-9]{3}[ ]?[0-9]{3}[ ]?#?[0-9]+&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -5889,96 +6321,22 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(02)2256-1116
-07-21180293
-2945 1412
-</pre>
-</div>
-</div>
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
 
-</div>
-</div>
+=== result of findFirstMatched ===
+row 0: (02)2256-1116
+row 1: 07-21180293
+row 2: 0800 000 123 #1234
+row 3: 2945 1412
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;[0-9]{4}[ ]?[0-9]{3}[ ]?[0-9]{3}&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>0800 000 123
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;\(?[0-9]{0,2}\)?-?[0-9]{4}[ -]?[0-9]{4}|[0-9]{4}[ ]?[0-9]{3}[ ]?[0-9]{3}&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>(02)2256-1116
-07-21180293
-0800 000 123
-2945 1412
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">giveMeTel</span><span class="p">(</span><span class="s">&quot;\(?[0-9]{0,2}\)?-?[0-9]{4}[ -]?[0-9]{4}|[0-9]{4}[ ]?[0-9]{3}[ ]?[0-9]{3}[ ]?#?[0-9]+&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>(02)2256-1116
-07-21180293
-0800 000 123 #1234
-2945 1412
+=== result of findAllMatched ===
+row 0:  [&apos;(02)2256-1116&apos;]
+row 1:  [&apos;07-21180293&apos;]
+row 2:  [&apos;0800 000 123 #1234&apos;]
+row 3:  [&apos;2945 1412&apos;]
 </pre>
 </div>
 </div>
@@ -5993,7 +6351,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="components-of-re">components of re<a class="anchor-link" href="#components-of-re">&#182;</a></h3><ul>
+<h2 id="components-of-re-&#27491;&#35215;&#34920;&#36948;&#24335;&#30340;&#22522;&#26412;&#20803;&#20214;">components of re &#27491;&#35215;&#34920;&#36948;&#24335;&#30340;&#22522;&#26412;&#20803;&#20214;<a class="anchor-link" href="#components-of-re-&#27491;&#35215;&#34920;&#36948;&#24335;&#30340;&#22522;&#26412;&#20803;&#20214;">&#182;</a></h2><ul>
 <li>characters (string-literals)<ul>
 <li>ABCabc123</li>
 </ul>
@@ -6010,25 +6368,61 @@ free tel: 0800 000 123 #1234
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="wildcarder:-.">wildcarder: <code>.</code><a class="anchor-link" href="#wildcarder:-.">&#182;</a></h4><p>match anything except newline(<code>\n</code>)</p>
+<h3 id="wildcarder:-.-&#20219;&#24847;&#23383;">wildcarder: <code>.</code> &#20219;&#24847;&#23383;<a class="anchor-link" href="#wildcarder:-.-&#20219;&#24847;&#23383;">&#182;</a></h3><p>match anything except newline(<code>\n</code>)</p>
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findAllMatched ===
+row 0:  [&apos;k&apos;, &apos;y&apos;, &apos;l&apos;, &apos;e&apos;, &apos; &apos;, &apos;c&apos;, &apos;h&apos;, &apos;u&apos;, &apos;n&apos;, &apos;g&apos;, &apos;;&apos;, &apos; &apos;, &apos;(&apos;, &apos;0&apos;, &apos;2&apos;, &apos;)&apos;, &apos;2&apos;, &apos;2&apos;, &apos;5&apos;, &apos;6&apos;, &apos;-&apos;, &apos;1&apos;, &apos;1&apos;, &apos;1&apos;, &apos;6&apos;, &apos;;&apos;, &apos; &apos;, &apos;N&apos;, &apos;e&apos;, &apos;w&apos;, &apos; &apos;, &apos;T&apos;, &apos;a&apos;, &apos;i&apos;, &apos;p&apos;, &apos;e&apos;, &apos;i&apos;, &apos; &apos;, &apos;C&apos;, &apos;i&apos;, &apos;t&apos;, &apos;y&apos;]
+row 1:  [&apos;M&apos;, &apos;r&apos;, &apos;.&apos;, &apos; &apos;, &apos;F&apos;, &apos;u&apos;, &apos;n&apos;, &apos;g&apos;, &apos;h&apos;, &apos;i&apos;, &apos;,&apos;, &apos;E&apos;, &apos;a&apos;, &apos;r&apos;, &apos;t&apos;, &apos;h&apos;, &apos; &apos;, &apos;A&apos;, &apos;n&apos;, &apos;y&apos;, &apos;w&apos;, &apos;h&apos;, &apos;e&apos;, &apos;r&apos;, &apos;e&apos;, &apos;,&apos;, &apos; &apos;, &apos;0&apos;, &apos;7&apos;, &apos;-&apos;, &apos;2&apos;, &apos;1&apos;, &apos;1&apos;, &apos;8&apos;, &apos;0&apos;, &apos;2&apos;, &apos;9&apos;, &apos;3&apos;]
+row 2:  [&apos;f&apos;, &apos;r&apos;, &apos;e&apos;, &apos;e&apos;, &apos; &apos;, &apos;t&apos;, &apos;e&apos;, &apos;l&apos;, &apos;:&apos;, &apos; &apos;, &apos;0&apos;, &apos;8&apos;, &apos;0&apos;, &apos;0&apos;, &apos; &apos;, &apos;0&apos;, &apos;0&apos;, &apos;0&apos;, &apos; &apos;, &apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos; &apos;, &apos;#&apos;, &apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;]
+row 3:  [&apos;D&apos;, &apos;r&apos;, &apos;.&apos;, &apos;A&apos;, &apos; &apos;, &apos;(&apos;, &apos;n&apos;, &apos;o&apos;, &apos;t&apos;, &apos; &apos;, &apos;D&apos;, &apos;r&apos;, &apos;.&apos;, &apos;B&apos;, &apos;)&apos;, &apos; &apos;, &apos;s&apos;, &apos;t&apos;, &apos;r&apos;, &apos;e&apos;, &apos;e&apos;, &apos;t&apos;, &apos; &apos;, &apos;n&apos;, &apos;o&apos;, &apos;.&apos;, &apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos; &apos;, &apos;2&apos;, &apos;9&apos;, &apos;4&apos;, &apos;5&apos;, &apos; &apos;, &apos;1&apos;, &apos;4&apos;, &apos;1&apos;, &apos;2&apos;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="bounders:-^-$">bounders: <code>^ $</code><a class="anchor-link" href="#bounders:-^-$">&#182;</a></h4><ul>
+<h3 id="bounders:-^-$-&#39318;&#23614;&#23383;&#20462;&#39166;&#23376;">bounders: <code>^ $</code> &#39318;&#23614;&#23383;&#20462;&#39166;&#23376;<a class="anchor-link" href="#bounders:-^-$-&#39318;&#23614;&#23383;&#20462;&#39166;&#23376;">&#182;</a></h3><ul>
 <li><code>^</code>: (following) the beginning character<ul>
 <li><code>^this</code> matches anything started with "this"</li>
 </ul>
@@ -6041,14 +6435,58 @@ free tel: 0800 000 123 #1234
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;^kyle&quot;</span><span class="p">)</span>
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;^Earth&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: kyle
+row 1: no match
+row 2: no match
+row 3: no match
+
+=== result of findFirstMatched ===
+row 0: no match
+row 1: no match
+row 2: no match
+row 3: no match
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="repeaters:-*-+-?">repeaters: <code>* + ?</code><a class="anchor-link" href="#repeaters:-*-+-?">&#182;</a></h4><p>to specify the occurrence condition of its previous character</p>
+<h3 id="repeaters:-*-+-?-&#37325;&#35079;&#23376;">repeaters: <code>* + ?</code> &#37325;&#35079;&#23376;<a class="anchor-link" href="#repeaters:-*-+-?-&#37325;&#35079;&#23376;">&#182;</a></h3><p>to specify the occurrence condition of its previous character</p>
 <ul>
 <li><code>*</code>: any occurrence (including zero)</li>
 <li><code>+</code>: at least one occurrence</li>
@@ -6057,16 +6495,53 @@ free tel: 0800 000 123 #1234
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;^kyle.*&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: kyle chung; (02)2256-1116; New Taipei City
+row 1: no match
+row 2: no match
+row 3: no match
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div><aside class="notes">
     * and + are both greedy: the re engine will try to match as many occurrence as possible.
-    </aside></section><section>
-    
+    </aside>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="advanced-repeaters:-{m,n}">advanced repeaters: <code>{m,n}</code><a class="anchor-link" href="#advanced-repeaters:-{m,n}">&#182;</a></h4><p>at least <code>m</code> and at most <code>n</code> occurrence</p>
+<h3 id="advanced-repeaters:-{m,n}-&#35336;&#25976;&#37325;&#35079;&#23376;">advanced repeaters: <code>{m,n}</code> &#35336;&#25976;&#37325;&#35079;&#23376;<a class="anchor-link" href="#advanced-repeaters:-{m,n}-&#35336;&#25976;&#37325;&#35079;&#23376;">&#182;</a></h3><p>at least <code>m</code> and at most <code>n</code> occurrence</p>
 <p>example:</p>
 <ul>
 <li><code>a{1,3}</code>: character "a" must occur at least one and at most three time</li>
@@ -6076,14 +6551,51 @@ free tel: 0800 000 123 #1234
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+<span class="n">findFirstMatched</span><span class="p">(</span><span class="s">&quot;0{3,3}&quot;</span><span class="p">)</span> <span class="c"># could be &quot;0{3}&quot; for short</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findFirstMatched ===
+row 0: no match
+row 1: no match
+row 2: 000
+row 3: no match
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="[]:-character-class"><code>[]</code>: character class<a class="anchor-link" href="#[]:-character-class">&#182;</a></h4><ul>
+<h3 id="[]:-character-class-&#22810;&#23383;&#20803;&#39006;&#32858;"><code>[]</code>: character class &#22810;&#23383;&#20803;&#39006;&#32858;<a class="anchor-link" href="#[]:-character-class-&#22810;&#23383;&#20803;&#39006;&#32858;">&#182;</a></h3><ul>
 <li>to specify a set of characters that may occcur</li>
 <li>most meta-char will lose their speacial meaning within the class<ul>
 <li><code>[0-9$]</code> matches any of numbers 0 to 9 or the dollar sign($)</li>
@@ -6099,28 +6611,109 @@ free tel: 0800 000 123 #1234
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;[a-zA-Z]+&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findAllMatched ===
+row 0:  [&apos;kyle&apos;, &apos;chung&apos;, &apos;New&apos;, &apos;Taipei&apos;, &apos;City&apos;]
+row 1:  [&apos;Mr&apos;, &apos;Funghi&apos;, &apos;Earth&apos;, &apos;Anywhere&apos;]
+row 2:  [&apos;free&apos;, &apos;tel&apos;]
+row 3:  [&apos;Dr&apos;, &apos;A&apos;, &apos;not&apos;, &apos;Dr&apos;, &apos;B&apos;, &apos;street&apos;, &apos;no&apos;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="or:-|">or: <code>|</code><a class="anchor-link" href="#or:-|">&#182;</a></h4><p>example:</p>
+<h3 id="or:-|-&#25110;">or: <code>|</code> &#25110;<a class="anchor-link" href="#or:-|-&#25110;">&#182;</a></h3><p>example:</p>
 <ul>
 <li><code>abc|def</code>: either "abc" or "def"</li>
 </ul>
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;kyle|Funghi&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;[Kk]yle|[Ff]unghi&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findAllMatched ===
+row 0:  [&apos;kyle&apos;]
+row 1:  [&apos;Funghi&apos;]
+row 2:  []
+row 3:  []
+
+=== result of findAllMatched ===
+row 0:  [&apos;kyle&apos;]
+row 1:  [&apos;Funghi&apos;]
+row 2:  []
+row 3:  []
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="grouper:-()">grouper: <code>()</code><a class="anchor-link" href="#grouper:-()">&#182;</a></h4><p>example:</p>
+<h3 id="grouper:-()-&#32676;&#32068;">grouper: <code>()</code> &#32676;&#32068;<a class="anchor-link" href="#grouper:-()-&#32676;&#32068;">&#182;</a></h3><p>example:</p>
 <ul>
 <li><code>(abc)+</code>: at least one occurrence of "abc"</li>
 <li><code>abc+</code>: here the repeater <code>+</code> only operates on character "c"</li>
@@ -6128,14 +6721,62 @@ free tel: 0800 000 123 #1234
 
 </div>
 </div>
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="special-sequences">special sequences<a class="anchor-link" href="#special-sequences">&#182;</a></h4><p>short-cut of specific character classes</p>
+<h3 id="escaper:-\-&#36339;&#33067;&#23376;">escaper: <code>\</code> &#36339;&#33067;&#23376;<a class="anchor-link" href="#escaper:-\-&#36339;&#33067;&#23376;">&#182;</a></h3><p>to have its following character <strong>as-is</strong>, i.e., stripping special meaning</p>
+<p>this is required when you want to match literal meta-char</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;\(.*\)&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findAllMatched ===
+row 0:  [&apos;(02)&apos;]
+row 1:  []
+row 2:  []
+row 3:  [&apos;(not Dr.B)&apos;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="special-sequences-&#20854;&#20182;&#29305;&#27530;&#23383;&#20803;">special sequences &#20854;&#20182;&#29305;&#27530;&#23383;&#20803;<a class="anchor-link" href="#special-sequences-&#20854;&#20182;&#29305;&#27530;&#23383;&#20803;">&#182;</a></h3><p>short-cut of specific character classes</p>
 <ul>
 <li><code>\d</code>: any decimal digit =&gt; <code>[0-9]</code></li>
 <li><code>\D</code>: any non-digit =&gt; <code>[^0-9]</code></li>
@@ -6143,23 +6784,56 @@ free tel: 0800 000 123 #1234
 <li><code>\S</code>: any non-white space =&gt; <code>[^ \t\n\r\f\v]</code></li>
 <li><code>\w</code>: any alphanumeric =&gt; <code>[a-zA-Z0-9_]</code></li>
 <li><code>\W</code>: any non-alphanumeric =&gt; <code>[^a-zA-Z0-9_]</code></li>
-<li><code>\b</code>: </li>
+<li><code>\b</code>: matches the empty string, but only at the beginning or end of a word (\w)</li>
 </ul>
 
 </div>
 </div>
-</div></section><section>
-    
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[95]:</div>
 <div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="escaper:-\">escaper: <code>\</code><a class="anchor-link" href="#escaper:-\">&#182;</a></h4><p>to have its following character <strong>as-is</strong>, i.e., stripping special meaning</p>
-<p>this is required when you want to match literal meta-char</p>
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_str</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">s</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;\d+&quot;</span><span class="p">)</span>
+<span class="n">findAllMatched</span><span class="p">(</span><span class="s">&quot;[\d\D]+&quot;</span><span class="p">)</span> <span class="c"># can be used in class</span>
+</pre></div>
 
 </div>
 </div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>kyle chung; (02)2256-1116; New Taipei City
+Mr. Funghi,Earth Anywhere, 07-21180293
+free tel: 0800 000 123 #1234
+Dr.A (not Dr.B) street no.123 2945 1412
+
+=== result of findAllMatched ===
+row 0:  [&apos;02&apos;, &apos;2256&apos;, &apos;1116&apos;]
+row 1:  [&apos;07&apos;, &apos;21180293&apos;]
+row 2:  [&apos;0800&apos;, &apos;000&apos;, &apos;123&apos;, &apos;1234&apos;]
+row 3:  [&apos;123&apos;, &apos;2945&apos;, &apos;1412&apos;]
+
+=== result of findAllMatched ===
+row 0:  [&apos;kyle chung; (02)2256-1116; New Taipei City&apos;]
+row 1:  [&apos;Mr. Funghi,Earth Anywhere, 07-21180293&apos;]
+row 2:  [&apos;free tel: 0800 000 123 #1234&apos;]
+row 3:  [&apos;Dr.A (not Dr.B) street no.123 2945 1412&apos;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div></section>
     </section><section>
     <section>
@@ -6179,13 +6853,13 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="import-python-re-module">import python re module<a class="anchor-link" href="#import-python-re-module">&#182;</a></h3>
+<h2 id="import-python-re-module">import python re module<a class="anchor-link" href="#import-python-re-module">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">re</span>
@@ -6202,18 +6876,20 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="compile-a-regex">compile a regex<a class="anchor-link" href="#compile-a-regex">&#182;</a></h3>
+<h2 id="compile-a-regex-&#32232;&#35695;&#27491;&#35215;&#34920;&#31034;&#27861;">compile a regex &#32232;&#35695;&#27491;&#35215;&#34920;&#31034;&#27861;<a class="anchor-link" href="#compile-a-regex-&#32232;&#35695;&#27491;&#35215;&#34920;&#31034;&#27861;">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;test+&quot;</span><span class="p">)</span>
+
 <span class="c"># return a pattern object</span>
 <span class="k">print</span> <span class="n">p</span>
+
 <span class="c"># check methods</span>
 <span class="p">[</span><span class="n">me</span> <span class="k">for</span> <span class="n">me</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">me</span><span class="p">))</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">me</span><span class="p">]</span>
 </pre></div>
@@ -6228,12 +6904,12 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;_sre.SRE_Pattern object at 0x1110d4cb0&gt;
+<pre>&lt;_sre.SRE_Pattern object at 0x10de76cb0&gt;
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -6245,21 +6921,20 @@ free tel: 0800 000 123 #1234
 </div>
 </div>
 
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="the-match-method">the <code>match</code> method<a class="anchor-link" href="#the-match-method">&#182;</a></h4><p>to perform pattern matching <strong>from the beginning</strong> of a string</p>
+<h3 id="the-match-method-&#24478;&#38957;&#25214;&#36215;">the <code>match</code> method &#24478;&#38957;&#25214;&#36215;<a class="anchor-link" href="#the-match-method-&#24478;&#38957;&#25214;&#36215;">&#182;</a></h3><p>to perform pattern matching <strong>from the beginning</strong> of a string</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">)</span>
@@ -6286,7 +6961,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;123test&quot;</span><span class="p">)</span>
@@ -6313,7 +6988,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;tes&quot;</span><span class="p">)</span>
@@ -6340,7 +7015,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
@@ -6356,7 +7031,7 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;_sre.SRE_Match object at 0x111c522a0&gt;
+<pre>&lt;_sre.SRE_Match object at 0x10f6dab28&gt;
 </pre>
 </div>
 </div>
@@ -6367,10 +7042,10 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;testtttt&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;testttttset&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -6383,7 +7058,7 @@ free tel: 0800 000 123 #1234
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;_sre.SRE_Match object at 0x111c521d0&gt;
+<pre>&lt;_sre.SRE_Match object at 0x10f6dab90&gt;
 </pre>
 </div>
 </div>
@@ -6391,23 +7066,22 @@ free tel: 0800 000 123 #1234
 </div>
 </div>
 
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="the-match-object">the <code>match</code> object<a class="anchor-link" href="#the-match-object">&#182;</a></h4>
+<h3 id="the-match-object">the <code>match</code> object<a class="anchor-link" href="#the-match-object">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;testtttt&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;testttttset&quot;</span><span class="p">)</span>
 <span class="p">[</span><span class="n">me</span> <span class="k">for</span> <span class="n">me</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">me</span><span class="p">))</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">me</span><span class="p">]</span>
 </pre></div>
 
@@ -6419,7 +7093,7 @@ free tel: 0800 000 123 #1234
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[28]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[21]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -6434,7 +7108,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># return the matched string</span>
@@ -6449,7 +7123,7 @@ free tel: 0800 000 123 #1234
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -6464,7 +7138,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="s">&quot;the match starts at pos </span><span class="si">%s</span><span class="s"> and ends at pos </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">(),</span> <span class="n">m</span><span class="o">.</span><span class="n">end</span><span class="p">())</span>
@@ -6478,7 +7152,7 @@ free tel: 0800 000 123 #1234
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[30]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -6493,7 +7167,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="s">&quot;the match starts at pos </span><span class="si">%s</span><span class="s"> and ends at pos </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">m</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
@@ -6507,7 +7181,7 @@ free tel: 0800 000 123 #1234
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[31]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -6519,21 +7193,20 @@ free tel: 0800 000 123 #1234
 </div>
 </div>
 
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="the-search-method">the <code>search</code> method<a class="anchor-link" href="#the-search-method">&#182;</a></h4><p>to perform pattern matching <strong>from anywhere</strong> of a string</p>
+<h3 id="the-search-method-&#20219;&#24847;&#20301;&#32622;&#38283;&#22987;&#25628;&#23563;">the <code>search</code> method &#20219;&#24847;&#20301;&#32622;&#38283;&#22987;&#25628;&#23563;<a class="anchor-link" href="#the-search-method-&#20219;&#24847;&#20301;&#32622;&#38283;&#22987;&#25628;&#23563;">&#182;</a></h3><p>to perform pattern matching <strong>from anywhere</strong> of a string</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;123test456&quot;</span><span class="p">)</span>
@@ -6561,20 +7234,20 @@ free tel: 0800 000 123 #1234
 </div>
 </div>
 
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="the-findall-and-finditer-method">the <code>findall</code> and <code>finditer</code> method<a class="anchor-link" href="#the-findall-and-finditer-method">&#182;</a></h4>
+<h3 id="the-findall-and-finditer-method-&#25214;&#20840;&#37096;&#30340;&#21305;&#37197;">the <code>findall</code> and <code>finditer</code> method &#25214;&#20840;&#37096;&#30340;&#21305;&#37197;<a class="anchor-link" href="#the-findall-and-finditer-method-&#25214;&#20840;&#37096;&#30340;&#21305;&#37197;">&#182;</a></h3><p>both <code>match</code> and <code>search</code> return only the <em>first</em> matched</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;\d&quot;</span><span class="p">)</span>
@@ -6589,7 +7262,7 @@ free tel: 0800 000 123 #1234
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[33]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[27]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -6604,7 +7277,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s">&quot;24 hours a day; 8 in sleep and 8 for works&quot;</span><span class="p">):</span>
@@ -6639,7 +7312,63 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="implicit-compile">implicit compile<a class="anchor-link" href="#implicit-compile">&#182;</a></h3><p>methods like <code>search</code>, <code>match</code>, and <code>findall</code> can be called on module-level</p>
+<h3 id="exercise!">exercise!<a class="anchor-link" href="#exercise!">&#182;</a></h3><blockquote><p>1 round for Daan Park is 2350m</p>
+</blockquote>
+<p>=&gt; try to retrieve two numbers present in the above sentence. (1 and 2350)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;1 round for Daan Park is 2350m&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&quot;\d+&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+<span class="n">m</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[38]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&apos;1&apos;, &apos;2350&apos;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="implicit-compile-&#30452;&#35695;&#27491;&#35215;&#34920;&#31034;&#27861;">implicit compile &#30452;&#35695;&#27491;&#35215;&#34920;&#31034;&#27861;<a class="anchor-link" href="#implicit-compile-&#30452;&#35695;&#27491;&#35215;&#34920;&#31034;&#27861;">&#182;</a></h2><p>methods like <code>search</code>, <code>match</code>, and <code>findall</code> can be called on module-level</p>
 
 </div>
 </div>
@@ -6702,11 +7431,11 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;\d+&quot;</span><span class="p">,</span> <span class="s">&quot;1 round for Daan Park is 2350m&quot;</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span> <span class="c"># notice that only the first matched is returned</span>
+<span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -6734,7 +7463,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="more-on-group-and-groups-method">more on <code>group</code> and <code>groups</code> method<a class="anchor-link" href="#more-on-group-and-groups-method">&#182;</a></h3>
+<h2 id="more-on-group-and-groups-method">more on <code>group</code> and <code>groups</code> method<a class="anchor-link" href="#more-on-group-and-groups-method">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -6744,6 +7473,7 @@ free tel: 0800 000 123 #1234
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;([0-9]+)([a-z]+)&quot;</span><span class="p">,</span> <span class="s">&quot;123abc456&quot;</span><span class="p">)</span>
+
 <span class="c"># return the whole matched (sub)string</span>
 <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
 </pre></div>
@@ -6775,6 +7505,7 @@ free tel: 0800 000 123 #1234
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># if grouper is used, they can be retrieved individually</span>
+
 <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
@@ -6805,6 +7536,7 @@ free tel: 0800 000 123 #1234
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># or multiple retrieved</span>
+
 <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
@@ -6835,6 +7567,7 @@ free tel: 0800 000 123 #1234
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># return each group matched in a tuple (works only if grouper is used)</span>
+
 <span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span> 
 </pre></div>
 
@@ -6894,7 +7627,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>(see the <a href="#/3">advanced section</a>)</p>
+<p>(see the <a href="#/4">advanced section</a>)</p>
 
 </div>
 </div>
@@ -6905,34 +7638,19 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="challenge!">challenge!<a class="anchor-link" href="#challenge!">&#182;</a></h3><blockquote><p>1 round for Daan Park is 2350m</p>
-</blockquote>
-<p>=&gt; try to retrieve two numbers present in the above sentence. (1 and 2350)</p>
-
+<h3 id="exercise-revisited">exercise revisited<a class="anchor-link" href="#exercise-revisited">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;1 round for Daan Park is 2350m&quot;</span>
-</pre></div>
 
-</div>
-</div>
-</div>
-
-</div></section><section>
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[44]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;(\d+).*(\d+).*&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span> <span class="c"># failed to retrieve the second number (what&#39;s wrong?)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;(\d+).*(\d+).*&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c"># failed to retrieve the second number (what&#39;s wrong?)</span>
 </pre></div>
 
 </div>
@@ -6943,7 +7661,7 @@ free tel: 0800 000 123 #1234
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[44]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[54]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -6958,7 +7676,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;(\d+)[^0-9]*(\d+).*&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
@@ -6973,7 +7691,7 @@ free tel: 0800 000 123 #1234
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[45]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[55]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -6992,7 +7710,7 @@ free tel: 0800 000 123 #1234
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="challenge!">challenge!<a class="anchor-link" href="#challenge!">&#182;</a></h3><blockquote><p>my code is 12
+<h3 id="another-exercise!">another exercise!<a class="anchor-link" href="#another-exercise!">&#182;</a></h3><blockquote><p>my code is 12
 <br>
 Mr. lucky7's code is 76
 <br>
@@ -7006,7 +7724,7 @@ are you coded no.1?
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="prompt input_prompt">In&nbsp;[82]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">test_str</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;my code is 12&quot;</span><span class="p">,</span> 
@@ -7018,11 +7736,10 @@ are you coded no.1?
 </div>
 </div>
 
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># hard-coded re</span>
@@ -7039,7 +7756,7 @@ are you coded no.1?
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[47]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[83]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -7051,11 +7768,10 @@ are you coded no.1?
 </div>
 </div>
 
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># match the number ended in the sentence, with optionally question mark</span>
@@ -7074,7 +7790,7 @@ are you coded no.1?
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[48]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[58]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -7086,11 +7802,10 @@ are you coded no.1?
 </div>
 </div>
 
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># match all numbers and return the last one</span>
@@ -7106,7 +7821,7 @@ are you coded no.1?
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[49]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[59]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -7125,7 +7840,7 @@ are you coded no.1?
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="challenge!">challenge!<a class="anchor-link" href="#challenge!">&#182;</a></h3><blockquote><p>My name is Kyle Chung, loving buying at PChome.</p>
+<h3 id="challenge-1">challenge 1<a class="anchor-link" href="#challenge-1">&#182;</a></h3><blockquote><p>My name is Kyle Chung, loving buying at PChome.</p>
 </blockquote>
 <p>=&gt; retrieve first-char-capitalized words</p>
 
@@ -7134,7 +7849,7 @@ are you coded no.1?
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[78]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;My name is Kyle Chung, loving buying at PChome.&quot;</span>
@@ -7144,16 +7859,15 @@ are you coded no.1?
 </div>
 </div>
 
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="prompt input_prompt">In&nbsp;[79]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># bounder &quot;\b&quot; is essential here</span>
-<span class="c"># why double the escaper?</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">b([A-Z][a-z]+)+&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># this one fails</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;[A-Z][a-z]+&quot;</span><span class="p">)</span>
 <span class="n">m</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">test_str</span><span class="p">)</span>
 </pre></div>
 
@@ -7165,7 +7879,40 @@ are you coded no.1?
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[51]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[79]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&apos;My&apos;, &apos;Kyle&apos;, &apos;Chung&apos;, &apos;Chome&apos;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># bounder &quot;\b&quot; is essential here</span>
+<span class="c"># why double the escaper?</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">b[A-Z][a-z]+</span><span class="se">\\</span><span class="s">b&quot;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">test_str</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[80]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -7183,7 +7930,7 @@ are you coded no.1?
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>(see the section <a href="#/4">raw string notation</a> for more info about double escaping)</p>
+<p>(see the <a href="#/4">advanced section</a>: "Raw Strign Notation" for more info about double escaping)</p>
 
 </div>
 </div>
@@ -7194,7 +7941,7 @@ are you coded no.1?
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="challenge!">challenge!<a class="anchor-link" href="#challenge!">&#182;</a></h3><blockquote><p>Things are getting HARDER! Now try capturing CamelUpperCased word(s).</p>
+<h3 id="challenge-2">challenge 2<a class="anchor-link" href="#challenge-2">&#182;</a></h3><blockquote><p>Things are getting HARDER! Now try capturing CamelUpperCased word(s).</p>
 </blockquote>
 <p>=&gt; retrieve any camel-cased word.</p>
 
@@ -7203,7 +7950,7 @@ are you coded no.1?
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="prompt input_prompt">In&nbsp;[122]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">test_str</span> <span class="o">=</span> <span class="s">&quot;Things are getting HARDER! Now try capturing CamelUpperCased word(s).&quot;</span>
@@ -7213,15 +7960,14 @@ are you coded no.1?
 </div>
 </div>
 
-</div></section><section>
-    
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[132]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">b[A-Z]+[a-z]+&quot;</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">test_str</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s">&quot;([A-Z][a-z]+)+&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -7232,11 +7978,162 @@ are you coded no.1?
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[53]:</div>
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Things
+Now
+CamelUpperCased
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[154]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s">&quot;([A-Z][a-z]+){2,}&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CamelUpperCased
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[157]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># but why fail in this?</span>
+
+<span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&quot;([A-Z][a-z]+){2,}&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[157]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[&apos;Things&apos;, &apos;Now&apos;, &apos;Camel&apos;]</pre>
+<pre>[&apos;Cased&apos;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[158]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># only one grouper but matched three times, values are overwritten to the matched group</span>
+<span class="c"># and findall sinces to return only matched group(s) when grouper is used</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s">&quot;([A-Z][a-z]+){2,}&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(&apos;Cased&apos;,)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[159]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># a possible fix</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s">&quot;(([A-Z][a-z]+){2,})&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(&apos;CamelUpperCased&apos;, &apos;Cased&apos;)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[160]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># to see things clearly</span>
+
+<span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&quot;(([A-Z][a-z]+){1,})&quot;</span><span class="p">,</span> <span class="n">test_str</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[160]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&apos;Things&apos;, &apos;Things&apos;), (&apos;Now&apos;, &apos;Now&apos;), (&apos;CamelUpperCased&apos;, &apos;Cased&apos;)]</pre>
 </div>
 
 </div>
@@ -7253,7 +8150,11 @@ are you coded no.1?
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Regex-in-Python-|-Advanced">Regex in Python<span style="color:blue"> | Advanced</span><a class="anchor-link" href="#Regex-in-Python-|-Advanced">&#182;</a></h1><h2 id="&#36914;&#38542;&#30340;&#27491;&#35215;&#34920;&#36948;&#24335;">&#36914;&#38542;&#30340;&#27491;&#35215;&#34920;&#36948;&#24335;<a class="anchor-link" href="#&#36914;&#38542;&#30340;&#27491;&#35215;&#34920;&#36948;&#24335;">&#182;</a></h2><p>regex extensions: <code>(?&lt;pattern&gt;)</code></p>
+<h1 id="Regex-in-Python-|-Advanced">Regex in Python<span style="color:blue"> | Advanced</span><a class="anchor-link" href="#Regex-in-Python-|-Advanced">&#182;</a></h1><h2 id="&#36914;&#38542;&#30340;&#27491;&#35215;&#34920;&#31034;&#27861;">&#36914;&#38542;&#30340;&#27491;&#35215;&#34920;&#31034;&#27861;<a class="anchor-link" href="#&#36914;&#38542;&#30340;&#27491;&#35215;&#34920;&#31034;&#27861;">&#182;</a></h2><ul>
+<li>regex extensions: <code>(?&lt;pattern&gt;)</code></li>
+<li>raw string notation</li>
+<li>中文字串</li>
+</ul>
 
 </div>
 </div>
@@ -7264,8 +8165,7 @@ are you coded no.1?
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>this section covers four extensions:</p>
-<ul>
+<h2 id="re-extensions">re extensions<a class="anchor-link" href="#re-extensions">&#182;</a></h2><ul>
 <li>non-capturer: <code>(?:&lt;pattern&gt;)</code></li>
 <li>ahead-looker: <code>(?=&lt;pattern&gt;)</code> and <code>(?!&lt;pattern&gt;)</code></li>
 <li>named-grouper: <code>(?P&lt;gname&gt;)</code></li>
@@ -7413,19 +8313,465 @@ string returned by .groups:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Raw-String-Notation">Raw String Notation<a class="anchor-link" href="#Raw-String-Notation">&#182;</a></h3>
+<h2 id="Raw-String-Notation">Raw String Notation<a class="anchor-link" href="#Raw-String-Notation">&#182;</a></h2><p>in Python, string expression may contain special characters (i.e., meta-char)</p>
+
 </div>
 </div>
-</div></section><section>
-    
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[162]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="s">&quot;a string&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>a string
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[164]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s"> a string with newline&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ a string with newline
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[167]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">n a string with escaped newline char&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>\n a string with escaped newline char
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[169]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="s">r&quot;\n a string with newline char&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>\n a string with newline char
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="the-troublesome-\b">the troublesome <code>\b</code><a class="anchor-link" href="#the-troublesome-\b">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[177]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># in python, \b is specially treated</span>
+
+<span class="k">print</span> <span class="s">&quot;the char </span><span class="se">\\</span><span class="s">b has special meaning of ASCII Backspace -&gt; [</span><span class="se">\b</span><span class="s">]&quot;</span>
+</pre></div>
 
 </div>
 </div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>the char \b has special meaning of ASCII Backspace -&gt; []
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[196]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># however, in re, \b is ALSO specially treated</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\b</span><span class="s">[A-Z][a-z]+&quot;</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">m</span> <span class="c"># no match since \b is not triggered as meta-char in re</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>None
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[198]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># need an escape</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">b[A-Z][a-z]+&quot;</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[199]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># alternatively, use raw string notation</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&quot;\b[A-Z][a-z]+&quot;</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#20013;&#25991;&#23383;&#20018;">&#20013;&#25991;&#23383;&#20018;<a class="anchor-link" href="#&#20013;&#25991;&#23383;&#20018;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[101]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">cstr</span> <span class="o">=</span> <span class="s">&quot;哈哈囉你好&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[102]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># sound good</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;哈囉&quot;</span><span class="p">,</span> <span class="n">cstr</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>哈囉
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[103]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># but this is not working</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;哈+&quot;</span><span class="p">,</span> <span class="n">cstr</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>哈
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[105]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># try instead</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;(哈)+&quot;</span><span class="p">,</span> <span class="n">cstr</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>哈哈
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[121]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># the reason being that a Chinese character is indeed a set of ASCII characters</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[121]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&apos;\xe5\x93\x88\x88&apos;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[118]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># to verify this...</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;哈+&quot;</span><span class="p">,</span> <span class="s">&quot;哈</span><span class="se">\x88</span><span class="s">&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[119]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[119]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&apos;\xe5\x93\x88\x88&apos;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[120]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>哈�
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div></section>
     </section><section>
     <section>
@@ -7763,8 +9109,6 @@ Reveal.initialize({
 controls: true,
 progress: true,
 history: true,
-
-width: 1080,
 
 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
