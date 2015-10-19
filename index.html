@@ -915,7 +915,7 @@ cover
 </li>
 <li>查詢文章的按讚資訊<ul>
 <li>solution 1: <code>/&lt;post_id&gt;/likes</code></li>
-<li>solution 2: <code>/&lt;post_id&gt;?fieds=likes</code></li>
+<li>solution 2: <code>/&lt;post_id&gt;?fields=likes</code></li>
 </ul>
 </li>
 <li>觀察重點：<ul>
@@ -5554,7 +5554,18 @@ get 25 post(s) from Chen John
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="why-re?-&#28858;&#20160;&#40636;&#38656;&#35201;&#23427;&#65311;">why re? &#28858;&#20160;&#40636;&#38656;&#35201;&#23427;&#65311;<a class="anchor-link" href="#why-re?-&#28858;&#20160;&#40636;&#38656;&#35201;&#23427;&#65311;">&#182;</a></h2>
+<h2 id="why-re?-&#28858;&#20160;&#40636;&#38656;&#35201;&#23427;&#65311;">why re? &#28858;&#20160;&#40636;&#38656;&#35201;&#23427;&#65311;<a class="anchor-link" href="#why-re?-&#28858;&#20160;&#40636;&#38656;&#35201;&#23427;&#65311;">&#182;</a></h2><ul>
+<li>sometimes only css selector/xpath is not enough<ul>
+<li>example =&gt; <a href="http://imgur.com/a/0I6pd">an imgur album</a></li>
+<li>where you want to download all the images, programmatically</li>
+<li>contents wanted may not be <em>structurally</em> distinguishable</li>
+<li>BUT could be distinguishable in their <em>string pattern</em>
+<img src="img/imgur.png"></li>
+</ul>
+</li>
+<li>=&gt; <a href="https://github.com/everdark/imgur-crawler">a solution</a></li>
+</ul>
+
 </div>
 </div>
 </div></section><section>
